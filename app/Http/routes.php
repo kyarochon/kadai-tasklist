@@ -12,7 +12,7 @@
 */
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/', 'TasksController@index');
+//    Route::get('/', 'TasksController@index');
     Route::resource('tasks', 'TasksController');
 });
 
