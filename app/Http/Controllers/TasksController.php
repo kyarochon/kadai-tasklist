@@ -18,8 +18,11 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks = Task::all();
-        
+        if (\Auth::check()) {
+            $user = \Auth::user();
+            $tasks = $user->tasks()->orderBy('created_at', 'desc')->get();
+        }
+
         return view('tasks.index', [
             'tasks' => $tasks,
         ]);
@@ -50,12 +53,12 @@ class TasksController extends Controller
         $this->validate($request, [
             'status' => 'required',
         ]);
-        
-        $task = new Task;
-        $task->status = $request->status;
-        $task->content = $request->content;
-        $task->save();
-        
+
+        $request->user()->tasks()->create([
+            'status'  => $request->status,
+            'content' => $request->content,
+        ]);
+
         return redirect('/');
     }
 

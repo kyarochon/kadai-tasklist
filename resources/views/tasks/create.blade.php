@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <?php $user = Auth::user(); ?>
     <h1>タスク作成ページ</h1>
 
     <div class="row">
